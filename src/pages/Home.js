@@ -111,7 +111,7 @@ const Home = () => {
   if (currentForm === "SIGNUP") {
     form = (
       <Form onSubmit={submitForm}>
-        <Type as='h2' tAlign='center' color='900' weight='700'>
+        <Type as='h2' tAlign='center' color='900' weight='700' margin="0 0 1rem">
           Sign Up - It's Free!
         </Type>
         <Label htmlFor='email'>
@@ -133,7 +133,7 @@ const Home = () => {
   } else {
     form = (
       <Form onSubmit={submitForm}>
-        <Type as='h2' tAlign='center' color='900' weight='700'>
+        <Type as='h2' tAlign='center' color='900' weight='700' margin="0 0 1rem">
           Welcome back!
         </Type>
         <Label htmlFor='email'>
@@ -175,7 +175,7 @@ const Home = () => {
       <Main>
         {/* Info */}
         <Info>
-          <Type as='h2' fontSize='32px' weight='600' color='900'>
+          <Type as='h2' fontSize='32px' weight='600' color='900' margin="0 0 1rem">
             Delicious meals, made simple.
           </Type>
           <Divider />
@@ -183,19 +183,19 @@ const Home = () => {
             <Icon>
               <img src={book} alt='Book icon' />
             </Icon>
-            <Type>Your personalized, digital recipe book</Type>
+            <Type margin="1rem 0">Your personalized, digital recipe book</Type>
           </Feature>
           <Feature>
             <Icon>
               <img src={shoppingCart} alt='Shopping cart icon' />
             </Icon>
-            <Type>Auto-generated shopping lists save you time</Type>
+            <Type margin="1rem 0">Auto-generated shopping lists save you time</Type>
           </Feature>
           <Feature>
             <Icon>
               <img src={calendar} alt='Calendar icon' />
             </Icon>
-            <Type>Effortless meal planning and prep</Type>
+            <Type margin="1rem 0">Effortless meal planning and prep</Type>
           </Feature>
         </Info>
 

@@ -1,10 +1,10 @@
 import styled from "styled-components"
 
 export const Button = styled.button`
-  height: 40px;
+  height: ${props => props.height || "40px"};
   padding: 0 14px;
   font-size: 16px;
-  margin:${props => props.margin || `0 .5rem`};
+  margin:${props => props.margin || `0 .5rem`} !important;
   letter-spacing: 0.25;
   text-decoration: none;
   outline: none;

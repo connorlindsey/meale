@@ -1,0 +1,38 @@
+{
+ "1": {
+   "name": "Recipe one",
+   "description": "These delicious Tilapia fish tacos are perfect for a summer lunch",
+   "tags": ["Tag", "Tag2", "Tag3"],
+   "image": "",
+   "steps": [
+     {
+       "ingredients": ["a", "b", "c"],
+       "instructions": "Here's what you've got to do"
+     }
+   ]
+ },
+ "2": {
+   "name": "Recipe two",
+   "description": "Recipe description",
+   "tags": ["Tag", "Tag2"],
+   "image": "",
+   "steps": [
+     {
+       "ingredients": ["a", "b", "c"],
+       "instructions": "Here's what you've got to do"
+     }
+   ]
+ },
+ "3": {
+   "name": "Recipe three",
+   "description": "Recipe description",
+   "tags": [],
+   "image": "",
+   "steps": [
+     {
+       "ingredients": ["a", "b", "c"],
+       "instructions": "Here's what you've got to do"
+     }
+   ]
+ }
+}

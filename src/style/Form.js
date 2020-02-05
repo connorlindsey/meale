@@ -17,7 +17,7 @@ export const Label = styled.label`
 export const Input = styled.input`
 	width: 100%;
 	border: 1px solid ${props => props.theme.grey["300"]};
-	border-radius: 8px;
+	border-radius: ${props => props.theme.borderRadius};
 	height: 2.25rem;
 	background: ${props => props.theme.grey["100"]};
 	outline: none;

@@ -10,6 +10,7 @@ export const Type = styled.p`
   color: ${props => props.theme.grey[props.color] || props.theme.grey["900"]};
   text-align: ${props => props.tAlign};
   transition: 0.1s all ease;
+  margin: ${props => props.margin || "0"} !important;
   cursor: ${props => props.hover && "pointer"};
 
   &:hover {
