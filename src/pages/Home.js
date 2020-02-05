@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Button } from "../style/Button"
 import { Form, Input, Label } from "../style/Form"
 import { Card } from "../style/Card"
@@ -27,11 +27,16 @@ const Main = styled.main`
   max-width: ${props => props.theme.maxWidth};
 
   @media screen and (max-width: 768px) {
+    margin: 1rem auto;
     flex-direction: column;
   }
 `
 
-const Info = styled.div``
+const Info = styled.div`
+  @media screen and (max-width: 768px) {
+    margin-bottom: 2rem;
+  }
+`
 
 const Feature = styled.div`
   font-size: 18px;
@@ -78,6 +83,61 @@ const Divider = styled.hr`
 `
 
 const Home = () => {
+  const [currentForm, setCurrentForm] = useState("SIGNUP")
+  const [values, setValues] = useState()
+
+  const toggleForm = () => {
+    const val = currentForm === "SIGNUP" ? "LOGIN" : "SIGNUP"
+    setCurrentForm(val)
+  }
+
+  let form
+  if (currentForm === "SIGNUP") {
+    form = (
+      <Form>
+        <Type as='h2' tAlign='center' color='900' weight='700'>
+          Sign Up - It's Free!
+        </Type>
+        <Label htmlFor='email'>
+          Email
+          <Input type='email' name='email' />
+        </Label>
+        <Label htmlFor='password'>
+          Password
+          <Input type='password' name='password' />
+        </Label>
+        <Button type='submit' margin='0'>
+          Sign Up
+        </Button>
+        <Type fontSize='14px' tAlign='center' color='700' weight='600' hover onClick={toggleForm}>
+          Have an account? Sign in
+        </Type>
+      </Form>
+    )
+  } else {
+    form = (
+      <Form>
+        <Type as='h2' tAlign='center' color='900' weight='700'>
+          Welcome back!
+        </Type>
+        <Label htmlFor='email'>
+          Email
+          <Input type='email' name='email' />
+        </Label>
+        <Label htmlFor='password'>
+          Password
+          <Input type='password' name='password' />
+        </Label>
+        <Button type='submit' margin='0'>
+          Login
+        </Button>
+        <Type fontSize='14px' tAlign='center' color='700' weight='600' hover onClick={toggleForm}>
+          Don't have an account? Sign up
+        </Type>
+      </Form>
+    )
+  }
+
   return (
     <Container>
       <Header>
@@ -117,26 +177,8 @@ const Home = () => {
         </Info>
 
         {/* Sign up Form */}
-        <Card maxWidth='400px' bg='200' padding='1rem 2rem'>
-          <Form>
-            <Type as='h2' tAlign='center' color='900' weight='700'>
-              Sign Up - It's Free!
-            </Type>
-            <Label htmlFor='email'>
-              Email
-              <Input type='email' name='email' />
-            </Label>
-            <Label htmlFor='password'>
-              Password
-              <Input type='password' name='password' />
-            </Label>
-            <Button type='submit' margin='0'>
-              Sign Up
-            </Button>
-            <Type fontSize='14px' tAlign='center' color='700' weight='600' hover>
-              Have an account? Sign in
-            </Type>
-          </Form>
+        <Card width="95%" maxWidth='400px' bg='200' padding='1rem 2rem' margin="0 auto">
+          {form}
         </Card>
       </Main>
     </Container>
