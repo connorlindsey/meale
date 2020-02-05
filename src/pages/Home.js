@@ -8,6 +8,7 @@ import styled from "styled-components"
 import book from "../assets/book.svg"
 import calendar from "../assets/calendar.svg"
 import shoppingCart from "../assets/shopping-cart.svg"
+import { useHistory } from "react-router-dom"
 
 const Container = styled.div`
   background: ${props => props.theme.primary["300"]};
@@ -83,28 +84,43 @@ const Divider = styled.hr`
 `
 
 const Home = () => {
+  const history = useHistory()
   const [currentForm, setCurrentForm] = useState("SIGNUP")
-  const [values, setValues] = useState()
+  const [values, setValues] = useState({
+    name: "",
+    password: "",
+  })
+
+  const handleInputChange = event => {
+    setValues({ ...values, [event.target.name]: event.target.value })
+  }
 
   const toggleForm = () => {
     const val = currentForm === "SIGNUP" ? "LOGIN" : "SIGNUP"
     setCurrentForm(val)
   }
 
+  const submitForm = event => {
+    event.preventDefault()
+    setTimeout(() => {
+      history.push("/dashboard")
+    }, 300)
+  }
+
   let form
   if (currentForm === "SIGNUP") {
     form = (
-      <Form>
+      <Form onSubmit={submitForm}>
         <Type as='h2' tAlign='center' color='900' weight='700'>
           Sign Up - It's Free!
         </Type>
         <Label htmlFor='email'>
           Email
-          <Input type='email' name='email' />
+          <Input type='email' name='email' required onChange={handleInputChange} />
         </Label>
         <Label htmlFor='password'>
           Password
-          <Input type='password' name='password' />
+          <Input type='password' name='password' required onChange={handleInputChange} />
         </Label>
         <Button type='submit' margin='0'>
           Sign Up
@@ -116,17 +132,17 @@ const Home = () => {
     )
   } else {
     form = (
-      <Form>
+      <Form onSubmit={submitForm}>
         <Type as='h2' tAlign='center' color='900' weight='700'>
           Welcome back!
         </Type>
         <Label htmlFor='email'>
           Email
-          <Input type='email' name='email' />
+          <Input type='email' name='email' required onChange={handleInputChange} />
         </Label>
         <Label htmlFor='password'>
           Password
-          <Input type='password' name='password' />
+          <Input type='password' name='password' required onChange={handleInputChange} />
         </Label>
         <Button type='submit' margin='0'>
           Login
@@ -145,7 +161,14 @@ const Home = () => {
           MEALE
         </Type>
         <nav>
-          <Button>Go to Your Meale</Button>
+          <Button
+            onClick={() => {
+              setTimeout(() => {
+                history.push("/dashboard")
+              }, 300)
+            }}>
+            Go to Your Meale
+          </Button>
         </nav>
       </Header>
 
@@ -177,7 +200,7 @@ const Home = () => {
         </Info>
 
         {/* Sign up Form */}
-        <Card width="95%" maxWidth='400px' bg='200' padding='1rem 2rem' margin="0 auto">
+        <Card width='95%' maxWidth='400px' bg='200' padding='1rem 2rem' margin='0 auto'>
           {form}
         </Card>
       </Main>

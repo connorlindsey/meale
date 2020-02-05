@@ -1,6 +1,6 @@
 export default {
   maxWidth: "1200px",
-  borderRadius: "8px",
+  borderRadius: "6px",
   elevationInner: `inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)`,
   elevation1: `0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24)`,
   elevation2: `0 3px 6px rgba(0,0,0,.15), 0 2px 4px rgba(0,0,0,.12)`,
