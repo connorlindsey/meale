@@ -12,8 +12,8 @@ const Container = styled.div`
 `
 
 const Main = styled.main`
-  width: 95%;
-  margin: 24px;
+  width: 80%;
+  margin: 2rem auto;
   display: grid;
   grid-gap: 16px;
   grid-template-columns: 1fr 300px;
@@ -53,28 +53,30 @@ const Dashboard = () => {
       <Main>
         {/* Calendar */}
         <Calendar>
-          <Card width="100%" max-width="100%">
-          {/* Title and date selection */}
-          <CalendarBar>
-            <Type>Meal calendar</Type>
-            <MonthSelector>
-              <span>Left</span>
-              <Type>January 2020</Type>
-              <span>Right</span>
-            </MonthSelector>
-          </CalendarBar>
-          <div>
-            The calendar will go here
-          </div>
+          <Card width='100%' max-width='100%'>
+            {/* Title and date selection */}
+            <CalendarBar>
+              <Type>Meal calendar</Type>
+              <MonthSelector>
+                <span>Left</span>
+                <Type>January 2020</Type>
+                <span>Right</span>
+              </MonthSelector>
+            </CalendarBar>
+            <div>The calendar will go here</div>
           </Card>
         </Calendar>
         {/* Sidebar */}
         <Sidebar>
           {/* Recipes */}
-          <Card width="300px" maxWidth="300px">Recipes</Card>
+          <Card width='300px' maxWidth='300px'>
+            Recipes
+          </Card>
 
           {/* Shopping List */}
-          <Card width="300px" maxWidth="300px">Shopping List</Card>
+          <Card width='300px' maxWidth='300px'>
+            Shopping List
+          </Card>
         </Sidebar>
       </Main>
     </Container>
