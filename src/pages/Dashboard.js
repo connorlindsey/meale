@@ -10,6 +10,9 @@ import { Button } from "../style/Button"
 import recipeData from "../assets/recipes.js"
 import Recipe from "../components/Recipe"
 
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+
 const Container = styled.div`
   background: ${props => props.theme.primary["100"]};
   min-height: 100vh;
@@ -73,7 +76,7 @@ const SearchBox = styled(Input)`
 `
 
 const ScrollContainer = styled.div`
-  height: 300px;
+  height: 250px;
   overflow-y: auto;
 `
 
@@ -104,6 +107,9 @@ const Dashboard = () => {
     )
     setFilteredRecipes(tmp)
   }, [search, recipes])
+
+  // Shopping List
+  const [startDate, setStartDate] = useState(new Date())
 
   return (
     <Container>
@@ -156,8 +162,15 @@ const Dashboard = () => {
           </Card>
 
           {/* Shopping List */}
-          <Card width='350px' maxWidth='350px' elevation='elevation1'>
-            Shopping List
+          <Card width='350px' maxWidth='350px' elevation='elevation1' bg='0' padding='1rem 1rem 0'>
+            <Type as='h2' fontSize='18px' color='900' weight='500' margin='0 0 .5rem'>
+              Generate your shopping list
+            </Type>
+            <Row>
+              <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+              <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+            </Row>
+            <ScrollContainer>Here's your shopping list</ScrollContainer>
           </Card>
         </Sidebar>
       </Main>
