@@ -6,13 +6,21 @@ const RecipeCard = styled.div`
   box-shadow: ${props => props.theme.elevation1};
   background-color: ${props => props.theme.grey["100"]};
   border-radius: ${props => props.theme.borderRadius};
-  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100px;
 
   h3 {
     font-size: 18px;
     font-weight: 500;
     margin: 0;
     color: ${props => props.theme.grey["900"]};
+    max-width: 200px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   p {
@@ -27,12 +35,27 @@ const RecipeCard = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  img {
+    width: 125px;
+    min-height: 100%;
+    object-fit: cover;
+    margin: 0;
+  }
+`
+
+const Info = styled.div`
+  margin: 0 !important;
+  padding: 0.75rem;
+  padding-right: .25rem;
 `
 
 const Tags = styled.div`
   display: flex;
   align-items: center;
   justify-content: start;
+  max-width: 160px;
+  overflow-x: hidden;
 `
 
 const Tag = styled.span`
@@ -41,6 +64,7 @@ const Tag = styled.span`
   font-size: 16px;
   line-height: 32px;
   margin: 0;
+  margin-right: 0.5rem;
   letter-spacing: 0.25;
   text-decoration: none;
   outline: none;
@@ -60,15 +84,15 @@ const Recipe = ({ recipe }) => {
 
   return (
     <RecipeCard onClick={goToRecipe}>
-      <div>
+      <Info>
         <h3>{recipe.name}</h3>
         <p>{recipe.description}</p>
         <Tags>
-          {recipe.tags.map(tag => (
-            <Tag>{tag}</Tag>
+          {recipe.tags.map((tag, i) => (
+            <Tag key={i}>{tag}</Tag>
           ))}
         </Tags>
-      </div>
+      </Info>
       <img src={recipe.image} alt={recipe.name} />
     </RecipeCard>
   )

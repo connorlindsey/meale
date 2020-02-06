@@ -72,6 +72,11 @@ const SearchBox = styled(Input)`
   }
 `
 
+const ScrollContainer = styled.div`
+  height: 300px;
+  overflow-y: auto;
+`
+
 const Dashboard = () => {
   const history = useHistory()
   const createRecipe = () => {
@@ -93,7 +98,9 @@ const Dashboard = () => {
   const [filteredRecipes, setFilteredRecipes] = useState(recipes)
   useEffect(() => {
     let tmp = recipes.filter(
-      recipe => recipe.name.includes(search) || recipe.description.includes(search)
+      recipe =>
+        recipe.name.toLowerCase().includes(search.toLowerCase()) ||
+        recipe.description.toLowerCase().includes(search.toLowerCase())
     )
     setFilteredRecipes(tmp)
   }, [search, recipes])
@@ -120,9 +127,9 @@ const Dashboard = () => {
         {/* Sidebar */}
         <Sidebar>
           {/* Recipes */}
-          <Card width='350px' maxWidth='350px' elevation='elevation1' bg='0'>
+          <Card width='350px' maxWidth='350px' elevation='elevation1' bg='0' padding='1rem 1rem 0'>
             <Type as='h2' fontSize='18px' color='900' weight='500' margin='0 0 .5rem'>
-              Recipes
+              Search recipes
             </Type>
             <Row>
               <SearchBox
@@ -142,7 +149,10 @@ const Dashboard = () => {
               </Type>
             )}
             {/* Display recipes */}
-            {recipes.length > 0 && filteredRecipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} />)}
+            <ScrollContainer>
+              {recipes.length > 0 &&
+                filteredRecipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} />)}
+            </ScrollContainer>
           </Card>
 
           {/* Shopping List */}

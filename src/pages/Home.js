@@ -126,7 +126,7 @@ const Home = () => {
         <Button type='submit' margin='0'>
           Sign Up
         </Button>
-        <Type fontSize='14px' tAlign='center' color='700' weight='600' hover onClick={toggleForm}>
+        <Type fontSize='14px' tAlign='center' color='700' margin=".5rem 0" weight='600' hover onClick={toggleForm}>
           Have an account? Sign in
         </Type>
       </Form>
@@ -148,7 +148,7 @@ const Home = () => {
         <Button type='submit' margin='0'>
           Login
         </Button>
-        <Type fontSize='14px' tAlign='center' color='700' weight='600' hover onClick={toggleForm}>
+        <Type fontSize='14px' tAlign='center' color='700' weight='600' margin=".5rem 0" hover onClick={toggleForm}>
           Don't have an account? Sign up
         </Type>
       </Form>
