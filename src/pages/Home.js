@@ -10,6 +10,7 @@ import calendar from "../assets/calendar.svg"
 import shoppingCart from "../assets/shopping-cart.svg"
 import { useHistory } from "react-router-dom"
 
+
 const Container = styled.div`
   background: ${props => props.theme.primary["300"]};
   min-height: 100vh;
@@ -106,7 +107,7 @@ const Home = () => {
       history.push("/dashboard")
     }, 300)
   }
-
+  
   let form
   if (currentForm === "SIGNUP") {
     form = (

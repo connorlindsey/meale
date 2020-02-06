@@ -1,6 +1,8 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import Nav from "../components/Nav"
+import { useParams } from "react-router-dom"
+import recipeData from "../assets/recipes"
 
 const Container = styled.div`
   background: ${props => props.theme.primary["100"]};
@@ -18,13 +20,17 @@ const Main = styled.main`
   grid-template-columns: 1fr 350px;
 `
 const RecipePage = () => {
+  let { id } = useParams()
+  const [recipe, setRecipe] = useState()
+  useEffect(() => {
+    let tmp = recipeData.find(r => r.id === id)
+    setRecipe(tmp)
+  }, [id, recipe])
+
   return (
     <Container>
       <Nav />
-      <Main>
-        Recipe RecipePage
-        <h2>View all the recipes!</h2>
-      </Main>
+      <Main>{recipe && <div>{recipe.name}</div>}</Main>
     </Container>
   )
 }

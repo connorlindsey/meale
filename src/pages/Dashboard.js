@@ -7,7 +7,8 @@ import { Type } from "../style/Typography"
 import { Input } from "../style/Form"
 import { Button } from "../style/Button"
 
-import recipeData from "../assets/recipes.json"
+import recipeData from "../assets/recipes.js"
+import Recipe from "../components/Recipe"
 
 const Container = styled.div`
   background: ${props => props.theme.primary["100"]};
@@ -71,55 +72,6 @@ const SearchBox = styled(Input)`
   }
 `
 
-const Recipe = styled.div`
-  box-shadow: ${props => props.theme.elevation1};
-  background-color: ${props => props.theme.grey["100"]};
-  border-radius: ${props => props.theme.borderRadius};
-  padding: .5rem;
-
-  h3 {
-    font-size: 18px;
-    font-weight: 500;
-    margin: 0;
-    color: ${props => props.theme.grey["900"]};
-  }
-
-  p {
-    font-size: 14px;
-    font-weight: 500;
-    margin: 0;
-    color: ${props => props.theme.grey["700"]};
-
-    max-width: 200px;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-`
-
-const Tags = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: start;
-`
-
-const Tag = styled.span`
-  height: 32px;
-  padding: 0 14px;
-  font-size: 16px;
-  line-height: 32px;
-  margin: 0;
-  letter-spacing: 0.25;
-  text-decoration: none;
-  outline: none;
-  text-decoration: none;
-  border-radius: ${props => props.theme.borderRadius};
-  background-color: ${props => props.theme.grey["600"]};
-  text-align: center;
-  color: #FFF;
-`
-
 const Dashboard = () => {
   const history = useHistory()
   const createRecipe = () => {
@@ -131,11 +83,11 @@ const Dashboard = () => {
   useEffect(() => {
     let tmp = recipes
     for (const prop in recipeData) {
-      tmp.push(recipeData[prop]);
+      tmp.push(recipeData[prop])
     }
     setRecipes(tmp)
   }, [recipes])
-  
+
   // Search Functionality
   const [search, setSearch] = useState("")
   const [filteredRecipes, setFilteredRecipes] = useState(recipes)
@@ -168,12 +120,17 @@ const Dashboard = () => {
         {/* Sidebar */}
         <Sidebar>
           {/* Recipes */}
-          <Card width='350px' maxWidth='350px' elevation='elevation1' bg="0">
+          <Card width='350px' maxWidth='350px' elevation='elevation1' bg='0'>
             <Type as='h2' fontSize='18px' color='900' weight='500' margin='0 0 .5rem'>
               Recipes
             </Type>
             <Row>
-              <SearchBox type='text' placeholder='Search' value={search} onChange={e => setSearch(e.target.value)} />
+              <SearchBox
+                type='text'
+                placeholder='Search'
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+              />
               <Button height='2.25rem' margin='0' onClick={createRecipe}>
                 Create recipe
               </Button>
@@ -184,22 +141,8 @@ const Dashboard = () => {
                 You don't have any recipes. Create a new one!
               </Type>
             )}
-            {recipes.length > 0 &&
-              filteredRecipes.map(recipe => (
-                <Recipe>
-                  <div>
-                    <h3>{recipe.name}</h3>
-                    <p>{recipe.description}</p>
-                    <Tags>
-                      {recipe.tags.map(tag => (
-                        <Tag>{tag}</Tag>
-                      ))}
-                    </Tags>
-                  </div>
-                  {/* TODO: Put the image here */}
-                </Recipe>
-              ))}
             {/* Display recipes */}
+            {recipes.length > 0 && filteredRecipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} />)}
           </Card>
 
           {/* Shopping List */}

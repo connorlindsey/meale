@@ -17,7 +17,7 @@ function App() {
           <Route path='/recipe/:id' component={RecipePage} />
           <Route path='/edit-recipe' component={RecipeForm} />
           <Route path='/dashboard' component={Dashboard} />
-          <Route path='/recipe' component={AllRecipes} />
+          <Route path='/recipes' component={AllRecipes} />
         </Router>
     </ThemeProvider>
   )

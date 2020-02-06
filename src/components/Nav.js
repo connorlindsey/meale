@@ -53,7 +53,7 @@ const Nav = () => {
         <StyledLink activeClassName='is-active' to='/dashboard'>
           Dashboard
         </StyledLink>
-        <StyledLink activeClassName='is-active' to='/recipe'>
+        <StyledLink activeClassName='is-active' to='/recipes'>
           Recipes
         </StyledLink>
         <StyledLink to='/'>Logout</StyledLink>
