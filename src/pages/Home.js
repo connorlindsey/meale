@@ -5,13 +5,11 @@ import { Card } from "../style/Card"
 import { Type } from "../style/Typography"
 import styled from "styled-components"
 
-import book from "../assets/book.svg"
-import calendar from "../assets/calendar.svg"
-import shoppingCart from "../assets/shopping-cart.svg"
+import { FiBook, FiCalendar, FiShoppingCart } from "react-icons/fi"
 import { useHistory } from "react-router-dom"
 
 const Container = styled.div`
-  background: ${props => props.theme.primary["300"]};
+  background: ${props => props.theme.primary["200"]};
   min-height: 100vh;
   margin: 0;
   padding: 16px;
@@ -47,7 +45,9 @@ const Feature = styled.div`
   align-items: center;
   position: relative;
 
-  img {
+  svg {
+    color: ${props => props.theme.primary["800"]};
+    stroke-width: 2px;
     height: 24px;
     width: 24px;
   }
@@ -55,7 +55,7 @@ const Feature = styled.div`
 
 const Icon = styled.div`
   border-radius: 50%;
-  background-color: ${props => props.theme.primary["200"]};
+  background-color: ${props => props.theme.primary["300"]};
   width: 44px;
   height: 44px;
   display: flex;
@@ -191,25 +191,25 @@ const Home = () => {
       <Main>
         {/* Info */}
         <Info>
-          <Type as='h2' fontSize='32px' weight='600' color='900' margin='0 0 1rem'>
+          <Type as='h2' fontSize='32px' weight='700' color='900' margin='0 0 1rem'>
             Delicious meals, made simple.
           </Type>
           <Divider />
           <Feature>
             <Icon>
-              <img src={book} alt='Book icon' />
+              <FiBook />
             </Icon>
             <Type margin='1rem 0'>Your personalized, digital recipe book</Type>
           </Feature>
           <Feature>
             <Icon>
-              <img src={shoppingCart} alt='Shopping cart icon' />
+              <FiShoppingCart />
             </Icon>
             <Type margin='1rem 0'>Auto-generated shopping lists save you time</Type>
           </Feature>
           <Feature>
             <Icon>
-              <img src={calendar} alt='Calendar icon' />
+              <FiCalendar />
             </Icon>
             <Type margin='1rem 0'>Effortless meal planning and prep</Type>
           </Feature>
