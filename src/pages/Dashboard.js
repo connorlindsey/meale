@@ -25,7 +25,8 @@ const Container = styled.div`
 `
 
 const Main = styled.main`
-  width: 90%;
+  width: 95%;
+  max-width: ${props => props.theme.maxWidth};
   margin: 2rem auto 0;
   display: grid;
   grid-gap: 16px;
