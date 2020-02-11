@@ -10,7 +10,6 @@ import calendar from "../assets/calendar.svg"
 import shoppingCart from "../assets/shopping-cart.svg"
 import { useHistory } from "react-router-dom"
 
-
 const Container = styled.div`
   background: ${props => props.theme.primary["300"]};
   min-height: 100vh;
@@ -22,11 +21,13 @@ const Container = styled.div`
 const Main = styled.main`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   align-content: center;
-  width: 90%;
+  width: 95%;
   margin: 4rem auto 0;
-  max-width: ${props => props.theme.maxWidth};
+  padding: 0 2rem;
+  max-width: 1100px;
+
 
   @media screen and (max-width: 900px) {
     margin: 2rem auto 0;
@@ -107,12 +108,12 @@ const Home = () => {
       history.push("/dashboard")
     }, 300)
   }
-  
+
   let form
   if (currentForm === "SIGNUP") {
     form = (
       <Form onSubmit={submitForm}>
-        <Type as='h2' tAlign='center' color='900' weight='700' margin="0 0 1rem">
+        <Type as='h2' tAlign='center' color='900' weight='700' margin='0 0 1rem'>
           Sign Up - It's Free!
         </Type>
         <Label htmlFor='email'>
@@ -126,7 +127,14 @@ const Home = () => {
         <Button type='submit' margin='0'>
           Sign Up
         </Button>
-        <Type fontSize='14px' tAlign='center' color='700' margin=".5rem 0" weight='600' hover onClick={toggleForm}>
+        <Type
+          fontSize='14px'
+          tAlign='center'
+          color='700'
+          margin='.5rem 0'
+          weight='600'
+          hover
+          onClick={toggleForm}>
           Have an account? Sign in
         </Type>
       </Form>
@@ -134,7 +142,7 @@ const Home = () => {
   } else {
     form = (
       <Form onSubmit={submitForm}>
-        <Type as='h2' tAlign='center' color='900' weight='700' margin="0 0 1rem">
+        <Type as='h2' tAlign='center' color='900' weight='700' margin='0 0 1rem'>
           Welcome back!
         </Type>
         <Label htmlFor='email'>
@@ -148,7 +156,14 @@ const Home = () => {
         <Button type='submit' margin='0'>
           Login
         </Button>
-        <Type fontSize='14px' tAlign='center' color='700' weight='600' margin=".5rem 0" hover onClick={toggleForm}>
+        <Type
+          fontSize='14px'
+          tAlign='center'
+          color='700'
+          weight='600'
+          margin='.5rem 0'
+          hover
+          onClick={toggleForm}>
           Don't have an account? Sign up
         </Type>
       </Form>
@@ -176,7 +191,7 @@ const Home = () => {
       <Main>
         {/* Info */}
         <Info>
-          <Type as='h2' fontSize='32px' weight='600' color='900' margin="0 0 1rem">
+          <Type as='h2' fontSize='32px' weight='600' color='900' margin='0 0 1rem'>
             Delicious meals, made simple.
           </Type>
           <Divider />
@@ -184,24 +199,24 @@ const Home = () => {
             <Icon>
               <img src={book} alt='Book icon' />
             </Icon>
-            <Type margin="1rem 0">Your personalized, digital recipe book</Type>
+            <Type margin='1rem 0'>Your personalized, digital recipe book</Type>
           </Feature>
           <Feature>
             <Icon>
               <img src={shoppingCart} alt='Shopping cart icon' />
             </Icon>
-            <Type margin="1rem 0">Auto-generated shopping lists save you time</Type>
+            <Type margin='1rem 0'>Auto-generated shopping lists save you time</Type>
           </Feature>
           <Feature>
             <Icon>
               <img src={calendar} alt='Calendar icon' />
             </Icon>
-            <Type margin="1rem 0">Effortless meal planning and prep</Type>
+            <Type margin='1rem 0'>Effortless meal planning and prep</Type>
           </Feature>
         </Info>
 
         {/* Sign up Form */}
-        <Card width='95%' maxWidth='400px' bg='200' padding='1rem 2rem' margin='0 auto'>
+        <Card width='95%' maxWidth='400px' bg='200' padding='1rem 2rem' margin='0'>
           {form}
         </Card>
       </Main>
