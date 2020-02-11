@@ -24,19 +24,19 @@ const Main = styled.main`
   align-items: center;
   justify-content: space-around;
   align-content: center;
-  width: 95%;
-  margin: 4rem auto;
+  width: 90%;
+  margin: 4rem auto 0;
   max-width: ${props => props.theme.maxWidth};
 
-  @media screen and (max-width: 768px) {
-    margin: 1rem auto;
+  @media screen and (max-width: 900px) {
+    margin: 2rem auto 0;
     flex-direction: column;
   }
 `
 
 const Info = styled.div`
-  @media screen and (max-width: 768px) {
-    margin-bottom: 2rem;
+  @media screen and (max-width: 900px) {
+    margin-bottom: 3rem;
   }
 `
 

@@ -4,32 +4,40 @@ import styled from "styled-components"
 import { useHistory } from "react-router-dom"
 import { Card } from "../style/Card"
 import { Type } from "../style/Typography"
-import { Input } from "../style/Form"
+import { Input, Label } from "../style/Form"
 import { Button } from "../style/Button"
+import { FiShoppingCart, FiChevronLeft, FiChevronRight } from "react-icons/fi"
 
 import recipeData from "../assets/recipes.js"
 import Recipe from "../components/Recipe"
 
+import moment from "moment"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
 const Container = styled.div`
   background: ${props => props.theme.primary["100"]};
   min-height: 100vh;
-  height: 100%;
+  height: 100% !important;
   margin: 0;
+  padding: 0;
   width: 100%;
 `
 
 const Main = styled.main`
   width: 90%;
-  margin: 2rem auto;
+  margin: 2rem auto 0;
   display: grid;
   grid-gap: 16px;
   grid-template-columns: 1fr 350px;
+  height: 100%;
+
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
 `
 
-const Calendar = styled.div`
+const CalendarContainer = styled.div`
   grid-column: 0 / 1;
   width: 100%;
 `
@@ -45,13 +53,28 @@ const MonthSelector = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 2.25rem;
+  width: 200px;
+
+  border: 1px solid ${props => props.theme.grey["500"]};
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 16px;
+  color: ${props => props.theme.grey["800"]};
+
+  svg {
+    height: 24px;
+    width: 24px;
+    color: ${props => props.theme.grey["600"]};
+    cursor: pointer;
+  }
 `
 
 const Sidebar = styled.div`
   width: 25%;
   max-width: 250px;
 
-  & * {
+  & > * {
     margin-bottom: 2rem;
   }
 `
@@ -80,13 +103,128 @@ const ScrollContainer = styled.div`
   overflow-y: auto;
 `
 
+const StyledDatePicker = styled(DatePicker)`
+  /* Input styles */
+  width: 95%;
+  border: none;
+  border-radius: ${props => props.theme.borderRadius};
+  height: 2.25rem;
+  background: ${props => props.theme.grey["100"]};
+  outline: none;
+  padding-left: 10px;
+  box-shadow: ${props => props.theme.elevation1};
+  font-size: 14px;
+  color: ${props => props.theme.grey["500"]};
+  text-transform: uppercase;
+`
+
+const ListItem = styled.div`
+  display: flex;
+  margin: 0.5rem 0;
+
+  .item-name {
+    font-size: 16px;
+    color: ${props => props.theme.grey["800"]};
+  }
+  .item-qty {
+    font-size: 16px;
+    color: ${props => props.theme.grey["600"]};
+  }
+  .spacer {
+    width: 100%;
+    padding: 0 0.25rem;
+    border-bottom: 1px dotted ${props => props.theme.grey["300"]};
+  }
+`
+
+const Divider = styled.hr`
+  width: 80px;
+  height: 3px;
+  background-color: ${props => props.theme.grey["400"]};
+  border-radius: ${props => props.theme.borderRadius};
+  margin: -1rem 0 1rem;
+  border: none;
+`
+
+const ListAction = styled.span`
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: ${props => props.theme.primary["500"]};
+  margin-left: 0.5rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+const Calendar = styled.table`
+  width: 95%;
+  margin: 1rem auto;
+  text-align: center;
+  border-collapse: collapse;
+
+  & td,
+  & th {
+    border: 1px solid ${props => props.theme.grey["300"]};
+  }
+  & tr:first-child th {
+    border-top: 0;
+  }
+  & tr:last-child td {
+    border-bottom: 0;
+  }
+  & tr td:first-child,
+  & tr th:first-child {
+    border-left: 0;
+  }
+  & tr td:last-child,
+  & tr th:last-child {
+    border-right: 0;
+  }
+
+  th {
+    font-size: 11px;
+    color: ${props => props.theme.grey["700"]};
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 0.5rem;
+    .date {
+      font-size: 14px;
+      ${props => props.theme.grey["700"]};
+    }
+
+    .today {
+      color: ${props => props.theme.primary["500"]};
+      font-weight: 700;
+    }
+  }
+`
+
+const RecipeSlot = styled.div`
+  width: 100%;
+  border: 2px solid ${props => props.theme.grey["300"]};
+  border-radius: ${props => props.theme.borderRadius};
+  height: 2rem;
+  background: ${props => props.theme.grey["200"]};
+  outline: none;
+  padding-left: 10px;
+  margin: 0.5rem auto;
+  box-shadow: ${props => props.theme.elevationInner};
+  cursor: pointer;
+`
+
 const Dashboard = () => {
   const history = useHistory()
   const createRecipe = () => {
     history.push("/edit-recipe")
   }
 
-  // Load recipes from JSON
+  /*=============
+  Load recipes
+  =============*/
   const [recipes, setRecipes] = useState([])
   useEffect(() => {
     let tmp = recipes
@@ -96,7 +234,9 @@ const Dashboard = () => {
     setRecipes(tmp)
   }, [recipes])
 
-  // Search Functionality
+  /*=============
+  Search
+  =============*/
   const [search, setSearch] = useState("")
   const [filteredRecipes, setFilteredRecipes] = useState(recipes)
   useEffect(() => {
@@ -108,28 +248,137 @@ const Dashboard = () => {
     setFilteredRecipes(tmp)
   }, [search, recipes])
 
-  // Shopping List
+  /*=============
+  Calendar
+  =============*/
+  const [dateObject, setDateObject] = useState(new moment())
+  let weekdayshort = moment.weekdaysShort()
+  let weekdayshortname = weekdayshort.map(day => {
+    return (
+      <th key={day} className='week-day'>
+        {day}
+      </th>
+    )
+  })
+
+  const getYear = () => dateObject.format("YY")
+  const getMonth = () => dateObject.format("MMMM")
+  const incMonth = () => {
+    let obj = moment(dateObject).set("month", dateObject.month() + 1)
+    setDateObject(obj)
+  }
+  const decMonth = () => {
+    let obj = moment(dateObject).set("month", dateObject.month() - 1)
+    setDateObject(obj)
+  }
+
+  const firstDayOfMonth = () => {
+    let d = dateObject
+    let firstDay = moment(d)
+      .startOf("month")
+      .format("d")
+    return firstDay
+  }
+
+  let blanks = []
+  for (let i = 0; i < firstDayOfMonth(); i++) {
+    blanks.push(<td>{""}</td>)
+  }
+
+  const getDaysInMonth = () => {
+    return dateObject.daysInMonth()
+  }
+
+  const getCurrentDay = () => {
+    return dateObject.format("D")
+  }
+
+  let daysInMonth = []
+  for (let d = 1; d <= getDaysInMonth(); d++) {
+    let currentDay = d === getCurrentDay() ? "today" : ""
+    daysInMonth.push(
+      <td key={d}>
+        <span className={`date ${currentDay}`}>{d}</span>
+        <RecipeSlot />
+        <RecipeSlot />
+        <RecipeSlot />
+      </td>
+    )
+  }
+
+  let totalSlots = [...blanks, ...daysInMonth]
+  let rows = []
+  let cells = []
+
+  totalSlots.forEach((row, i) => {
+    if (i % 7 !== 0) {
+      cells.push(row) // if index not equal 7 that means not go to next week
+    } else {
+      rows.push(cells) // when reach next week we contain all td in last week to rows
+      cells = [] // empty container
+      cells.push(row) // in current loop we still push current row to new container
+    }
+    if (i === totalSlots.length - 1) {
+      // when end loop we add remain date
+      rows.push(cells)
+    }
+  })
+
+  let daysinmonth = rows.map((d, i) => {
+    return <tr>{d}</tr>
+  })
+
+  /*=============
+  Shopping List
+  =============*/
   const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
+  const [shoppingList, setShoppingList] = useState([])
+
+  const generateShoppingList = () => {
+    let tmp = [
+      { qty: "4", name: "Tilapia" },
+      { qty: "1", name: "Cilantro" },
+      { qty: "12", name: "Tortillas" },
+      { qty: "4", name: "Tilapia" },
+      { qty: "1", name: "Cilantro" },
+      { qty: "12", name: "Tortillas" },
+      { qty: "4", name: "Tilapia" },
+      { qty: "1", name: "Cilantro" },
+      { qty: "12", name: "Tortillas" },
+      { qty: "4", name: "Tilapia" },
+      { qty: "1", name: "Cilantro" },
+      { qty: "12", name: "Tortillas" },
+    ]
+    setShoppingList(tmp)
+  }
 
   return (
     <Container>
       <Nav />
       <Main>
         {/* Calendar */}
-        <Calendar>
+        <CalendarContainer>
           <Card width='100%' max-width='100%' elevation='elevation1'>
             {/* Title and date selection */}
             <CalendarBar>
-              <Type>Meal calendar</Type>
+              <Type fontSize='18px'>Meal calendar</Type>
               <MonthSelector>
-                <span>Left</span>
-                <Type>January 2020</Type>
-                <span>Right</span>
+                <FiChevronLeft onClick={decMonth} />
+                <Type color="700">{getMonth() + " " + getYear()}</Type>
+                <FiChevronRight onClick={incMonth} />
               </MonthSelector>
             </CalendarBar>
-            <div>The calendar will go here</div>
+            <div>
+              <Calendar>
+                <thead>
+                  <tr>{weekdayshortname}</tr>
+                </thead>
+                <tbody>{daysinmonth}</tbody>
+              </Calendar>
+            </div>
           </Card>
-        </Calendar>
+        </CalendarContainer>
         {/* Sidebar */}
         <Sidebar>
           {/* Recipes */}
@@ -167,10 +416,41 @@ const Dashboard = () => {
               Generate your shopping list
             </Type>
             <Row>
-              <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
-              <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+              <Label>
+                Start date
+                <StyledDatePicker selected={startDate} onChange={date => setStartDate(date)} />
+              </Label>
+              <Label>
+                End date
+                <StyledDatePicker selected={endDate} onChange={date => setEndDate(date)} />
+              </Label>
+              <Button margin='1.4rem 0 0 0' height='2.25rem' onClick={generateShoppingList}>
+                <FiShoppingCart />
+              </Button>
             </Row>
-            <ScrollContainer>Here's your shopping list</ScrollContainer>
+            <ScrollContainer>
+              {shoppingList.length > 0 && (
+                <div>
+                  <Row>
+                    <Type fontSize='18px' color='800' margin='0 0 1rem'>
+                      Your list
+                    </Type>
+                    <div>
+                      <ListAction>Print list</ListAction>
+                      <ListAction>Send via text</ListAction>
+                    </div>
+                  </Row>
+                  <Divider />
+                  {shoppingList.map(item => (
+                    <ListItem key={item.name}>
+                      <div className='item-name'>{item.name}</div>
+                      <div className='spacer'></div>
+                      <div className='item-qty'>{item.qty}</div>
+                    </ListItem>
+                  ))}
+                </div>
+              )}
+            </ScrollContainer>
           </Card>
         </Sidebar>
       </Main>

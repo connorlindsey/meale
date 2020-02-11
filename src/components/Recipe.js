@@ -10,6 +10,7 @@ const RecipeCard = styled.div`
   flex-direction: row;
   justify-content: space-between;
   height: 100px;
+  margin: 1rem 0;
 
   h3 {
     font-size: 18px;
@@ -47,7 +48,7 @@ const RecipeCard = styled.div`
 const Info = styled.div`
   margin: 0 !important;
   padding: 0.75rem;
-  padding-right: .25rem;
+  padding-right: 0.25rem;
 `
 
 const Tags = styled.div`
@@ -75,6 +76,10 @@ const Tag = styled.span`
   color: #fff;
 `
 
+const Img = styled.img`
+  border-radius: 0 ${props => props.theme.borderRadius} ${props => props.theme.borderRadius} 0;
+`
+
 const Recipe = ({ recipe }) => {
   const history = useHistory()
 
@@ -93,7 +98,7 @@ const Recipe = ({ recipe }) => {
           ))}
         </Tags>
       </Info>
-      <img src={recipe.image} alt={recipe.name} />
+      <Img src={recipe.image} alt={recipe.name} />
     </RecipeCard>
   )
 }
