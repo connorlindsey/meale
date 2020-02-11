@@ -100,7 +100,7 @@ const SearchBox = styled(Input)`
 `
 
 const ScrollContainer = styled.div`
-  height: 250px;
+  height: 300px;
   overflow-y: auto;
 `
 
@@ -191,10 +191,10 @@ const Calendar = styled.table`
   }
 
   td {
-    padding: 0.5rem;
+    padding: 0.25rem 0.5rem;
     .date {
-      font-size: 14px;
-      ${props => props.theme.grey["700"]};
+      font-size: 12px;
+      color: ${props => props.theme.grey["700"]};
     }
 
     .today {
@@ -213,7 +213,6 @@ const RecipeSlot = styled.div`
   outline: none;
   padding-left: 10px;
   margin: 0.5rem auto;
-  box-shadow: ${props => props.theme.elevationInner};
   position: relative;
 `
 
