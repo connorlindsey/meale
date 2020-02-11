@@ -6,7 +6,7 @@ import { Card } from "../style/Card"
 import { Type } from "../style/Typography"
 import { Input, Label } from "../style/Form"
 import { Button } from "../style/Button"
-import { FiShoppingCart, FiChevronLeft, FiChevronRight } from "react-icons/fi"
+import { FiShoppingCart, FiChevronLeft, FiChevronRight, FiPlus } from "react-icons/fi"
 
 import recipeData from "../assets/recipes.js"
 import Recipe from "../components/Recipe"
@@ -213,7 +213,21 @@ const RecipeSlot = styled.div`
   padding-left: 10px;
   margin: 0.5rem auto;
   box-shadow: ${props => props.theme.elevationInner};
-  cursor: pointer;
+  position: relative;
+`
+
+const HiddenIcon = styled(FiPlus)`
+  cursor: default;
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  right: 8px;
+  top: 8px;
+  color: ${props => props.theme.grey["100"]};
+  ${RecipeSlot}:hover & {
+    cursor: pointer;
+    color: ${props => props.theme.grey["500"]};
+  }
 `
 
 const Dashboard = () => {
@@ -299,9 +313,15 @@ const Dashboard = () => {
     daysInMonth.push(
       <td key={d}>
         <span className={`date ${currentDay}`}>{d}</span>
-        <RecipeSlot />
-        <RecipeSlot />
-        <RecipeSlot />
+        <RecipeSlot>
+          <HiddenIcon />
+        </RecipeSlot>
+        <RecipeSlot>
+          <HiddenIcon />
+        </RecipeSlot>
+        <RecipeSlot>
+          <HiddenIcon />
+        </RecipeSlot>
       </td>
     )
   }
@@ -365,7 +385,7 @@ const Dashboard = () => {
               <Type fontSize='18px'>Meal calendar</Type>
               <MonthSelector>
                 <FiChevronLeft onClick={decMonth} />
-                <Type color="700">{getMonth() + " " + getYear()}</Type>
+                <Type color='700'>{getMonth() + " " + getYear()}</Type>
                 <FiChevronRight onClick={incMonth} />
               </MonthSelector>
             </CalendarBar>
