@@ -1,6 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import { useHistory } from "react-router-dom"
+import { ItemTypes } from '../utils/DragItems'
+import { useDrag } from 'react-dnd'
 
 const RecipeCard = styled.div`
   box-shadow: ${props => props.theme.elevation1};
@@ -11,6 +13,7 @@ const RecipeCard = styled.div`
   justify-content: space-between;
   height: 100px;
   margin: 1rem 0;
+  opacity: ${props => props.isDragging && "0.5"};
 
   h3 {
     font-size: 18px;
@@ -82,13 +85,19 @@ const Img = styled.img`
 
 const Recipe = ({ recipe }) => {
   const history = useHistory()
+  const [{isDragging}, drag] = useDrag({
+    item: { type: ItemTypes.RECIPE },
+		collect: monitor => ({
+			isDragging: !!monitor.isDragging(),
+		}),
+  })
 
   const goToRecipe = () => {
     history.push(`/recipe/${recipe.id}`)
   }
 
   return (
-    <RecipeCard onClick={goToRecipe}>
+    <RecipeCard onClick={goToRecipe} ref={drag} isDragging={isDragging}>
       <Info>
         <h3>{recipe.name}</h3>
         <p>{recipe.description}</p>

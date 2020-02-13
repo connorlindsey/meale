@@ -35,7 +35,6 @@ const SearchBox = styled(Input)`
   border: 3px solid ${props => props.theme.grey["400"]};
   margin: 0;
   margin-right: 1rem;
-  width: auto;
 
   &::placeholder {
     font-size: 14px;

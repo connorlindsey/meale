@@ -6,9 +6,10 @@ import { Card } from "../style/Card"
 import { Type } from "../style/Typography"
 import { Input, Label } from "../style/Form"
 import { Button } from "../style/Button"
-import { FiShoppingCart, FiChevronLeft, FiChevronRight, FiPlus } from "react-icons/fi"
+import { FiShoppingCart, FiChevronLeft, FiChevronRight, FiX } from "react-icons/fi"
 
-import recipeData from "../assets/recipes.js"
+import RecipeSlot from "../components/RecipeSlot"
+import recipeData, { calendarRecipes } from "../assets/recipes.js"
 import Recipe from "../components/Recipe"
 
 import moment from "moment"
@@ -204,33 +205,25 @@ const Calendar = styled.table`
   }
 `
 
-const RecipeSlot = styled.div`
-  width: 100%;
-  border: 2px solid ${props => props.theme.grey["300"]};
-  border-radius: ${props => props.theme.borderRadius};
-  height: 2rem;
-  background: ${props => props.theme.grey["200"]};
-  outline: none;
-  padding-left: 10px;
-  margin: 0.5rem auto;
-  position: relative;
+// Notification
+const Close = styled(FiX)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: ${props => props.theme.grey["800"]};
+  cursor: pointer;
 `
 
-const HiddenIcon = styled(FiPlus)`
-  cursor: default;
-  position: absolute;
-  height: 16px;
-  width: 16px;
-  right: 8px;
-  top: 8px;
-  color: ${props => props.theme.grey["100"]};
-  ${RecipeSlot}:hover & {
-    cursor: pointer;
-    color: ${props => props.theme.grey["500"]};
-  }
+const Notification = styled.div`
+  position: relative;
+  background-color: ${props => props.theme.primary["300"]};
+  width: 100%;
+  padding: 1rem .5rem;
+  border-radius: ${props => props.theme.borderRadius};
 `
 
 const Dashboard = () => {
+  const [isNotificationShowing, setNotification] = useState(true)
   const history = useHistory()
   const createRecipe = () => {
     history.push("/edit-recipe")
@@ -296,7 +289,7 @@ const Dashboard = () => {
 
   let blanks = []
   for (let i = 0; i < firstDayOfMonth(); i++) {
-    blanks.push(<td>{""}</td>)
+    blanks.push(<td key={i * 10}>{""}</td>)
   }
 
   const getDaysInMonth = () => {
@@ -307,21 +300,40 @@ const Dashboard = () => {
     return dateObject.format("D")
   }
 
+  const getRecipeByDay = (day, meal) => {
+    const month = getMonth()
+    if (typeof calendarRecipes[month] === "undefined") {
+      return null
+    } else if (typeof calendarRecipes[month][day] === "undefined") {
+      return null
+    } else if (typeof calendarRecipes[month][day][meal] === "undefined") {
+      return null
+    }
+    console.log("Here ", month, day, meal)
+    return calendarRecipes[month][day][meal]
+  }
+
+  const clearRecipe = (day, meal) => {
+    const month = getMonth()
+    if (typeof calendarRecipes[month] === "undefined") {
+      return null
+    } else if (typeof calendarRecipes[month][day] === "undefined") {
+      return null
+    } else if (typeof calendarRecipes[month][day][meal] === "undefined") {
+      return null
+    }
+    calendarRecipes[month][day][meal] = null
+  }
+
   let daysInMonth = []
   for (let d = 1; d <= getDaysInMonth(); d++) {
     let currentDay = d === getCurrentDay() ? "today" : ""
     daysInMonth.push(
       <td key={d}>
         <span className={`date ${currentDay}`}>{d}</span>
-        <RecipeSlot>
-          <HiddenIcon />
-        </RecipeSlot>
-        <RecipeSlot>
-          <HiddenIcon />
-        </RecipeSlot>
-        <RecipeSlot>
-          <HiddenIcon />
-        </RecipeSlot>
+        <RecipeSlot date={d} meal={"b"} recipe={getRecipeByDay(d, "b")} clearRecipe={clearRecipe} />
+        <RecipeSlot date={d} meal={"l"} recipe={getRecipeByDay(d, "l")} clearRecipe={clearRecipe} />
+        <RecipeSlot date={d} meal={"d"} recipe={getRecipeByDay(d, "d")} clearRecipe={clearRecipe} />
       </td>
     )
   }
@@ -345,7 +357,7 @@ const Dashboard = () => {
   })
 
   let daysinmonth = rows.map((d, i) => {
-    return <tr>{d}</tr>
+    return <tr key={d + i}>{d}</tr>
   })
 
   /*=============
@@ -381,6 +393,12 @@ const Dashboard = () => {
         <CalendarContainer>
           <Card width='100%' max-width='100%' elevation='elevation1'>
             {/* Title and date selection */}
+            {isNotificationShowing && (
+              <Notification>
+                <p>Drag and drop recipes onto meal slots to add to your calendar</p>
+                <Close onClick={() => setNotification(false)} />
+              </Notification>
+            )}
             <CalendarBar>
               <Type fontSize='18px'>Meal calendar</Type>
               <MonthSelector>

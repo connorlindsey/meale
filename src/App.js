@@ -7,11 +7,14 @@ import Dashboard from "./pages/Dashboard"
 import Home from "./pages/Home"
 import RecipeForm from "./pages/RecipeForm"
 import RecipePage from "./pages/RecipePage"
+import { DndProvider } from "react-dnd"
+import Backend from "react-dnd-html5-backend"
 import "./style/index.css"
 
 function App() {
   return (
     <ThemeProvider theme={Theme}>
+      <DndProvider backend={Backend}>
         <Router>
           <Route path='/' exact component={Home} />
           <Route path='/recipe/:id' component={RecipePage} />
@@ -19,6 +22,7 @@ function App() {
           <Route path='/dashboard' component={Dashboard} />
           <Route path='/recipes' component={AllRecipes} />
         </Router>
+      </DndProvider>
     </ThemeProvider>
   )
 }
