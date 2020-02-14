@@ -208,9 +208,12 @@ const Calendar = styled.table`
 // Notification
 const Close = styled(FiX)`
   position: absolute;
-  top: 10px;
-  right: 10px;
-  color: ${props => props.theme.grey["800"]};
+  top: 8px;
+  right: 8px;
+  color: ${props => props.theme.primary["700"]};
+  border-radius: 20px;
+  height: 16px;
+  width: 16px;
   cursor: pointer;
 `
 
@@ -218,7 +221,7 @@ const Notification = styled.div`
   position: relative;
   background-color: ${props => props.theme.primary["300"]};
   width: 100%;
-  padding: 1rem .5rem;
+  padding: .1rem .5rem;
   border-radius: ${props => props.theme.borderRadius};
 `
 
@@ -258,6 +261,7 @@ const Dashboard = () => {
   /*=============
   Calendar
   =============*/
+  const [displayRecipes, setDisplayRecipes] = useState(calendarRecipes);
   const [dateObject, setDateObject] = useState(new moment())
   let weekdayshort = moment.weekdaysShort()
   let weekdayshortname = weekdayshort.map(day => {
@@ -302,15 +306,28 @@ const Dashboard = () => {
 
   const getRecipeByDay = (day, meal) => {
     const month = getMonth()
-    if (typeof calendarRecipes[month] === "undefined") {
+    if (typeof displayRecipes[month] === "undefined") {
       return null
-    } else if (typeof calendarRecipes[month][day] === "undefined") {
+    } else if (typeof displayRecipes[month][day] === "undefined") {
       return null
-    } else if (typeof calendarRecipes[month][day][meal] === "undefined") {
+    } else if (typeof displayRecipes[month][day][meal] === "undefined") {
       return null
     }
-    console.log("Here ", month, day, meal)
-    return calendarRecipes[month][day][meal]
+    return displayRecipes[month][day][meal]
+  }
+
+  const [num, setNum] = useState(0);
+  const addRecipeToDate = (recipe, day, meal) => {
+    const month = getMonth()
+    if (typeof calendarRecipes[month] === "undefined") {
+      calendarRecipes[month] = {};
+    } 
+    if (typeof calendarRecipes[month][day] === "undefined") {
+      calendarRecipes[month][day] = {}
+    }
+    calendarRecipes[month][day][meal] = recipe;
+    setDisplayRecipes(displayRecipes);
+    setNum(num + 1);
   }
 
   const clearRecipe = (day, meal) => {
@@ -444,7 +461,7 @@ const Dashboard = () => {
             {/* Display recipes */}
             <ScrollContainer>
               {recipes.length > 0 &&
-                filteredRecipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} />)}
+                filteredRecipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} addRecipeToDate={addRecipeToDate} />)}
             </ScrollContainer>
           </Card>
 

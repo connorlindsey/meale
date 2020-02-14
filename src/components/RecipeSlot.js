@@ -6,11 +6,11 @@ import { ItemTypes } from '../utils/DragItems'
 import { useDrop } from 'react-dnd'
 
 const StyledSlot = styled.div`
-  width: 100%;
+  min-width: 100px;
   border: 2px solid ${props => props.theme.grey["300"]};
   border-radius: ${props => props.theme.borderRadius};
   height: 2rem;
-  background: ${props => props.theme.grey["200"]};
+  background: ${props => props.canDrop ? props.theme.primary["400"] : props.theme.grey["200"]};
   outline: none;
   margin: 0.5rem auto;
   padding-left: 4px;
@@ -60,17 +60,19 @@ const RecipeSlot = ({ recipe, date, clearRecipe, meal }) => {
   }
 
   // Drag and drop
-  const [{ isOver }, drop] = useDrop({
+  const [{ canDrop, isOver }, drop] = useDrop({
 		accept: ItemTypes.RECIPE,
-		drop: () => console.log("Dropped"),
+    drop: () => ({ date, meal }),
 		collect: monitor => ({
       isOver: !!monitor.isOver(),
+      canDrop: monitor.canDrop()
 		}),
-	})
+  })
+  
   return (
-    <StyledSlot ref={drop}>
+    <StyledSlot ref={drop} canDrop={canDrop && isOver}>
       {rec && (
-        <Type as="h4" fontSize="12px">{rec.name}</Type>
+        <Type as="h4" fontSize="12px" color="800">{rec.name}</Type>
       )}
       {rec ? <HiddenMinus onClick={removeRecipe} /> : <HiddenPlus />}
     </StyledSlot>

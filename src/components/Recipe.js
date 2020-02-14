@@ -1,8 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 import { useHistory } from "react-router-dom"
-import { ItemTypes } from '../utils/DragItems'
-import { useDrag } from 'react-dnd'
+import { ItemTypes } from "../utils/DragItems"
+import { useDrag, DragPreviewImage } from "react-dnd"
+import mealIcon from "../assets/meal.png"
 
 const RecipeCard = styled.div`
   box-shadow: ${props => props.theme.elevation1};
@@ -14,6 +15,7 @@ const RecipeCard = styled.div`
   height: 100px;
   margin: 1rem 0;
   opacity: ${props => props.isDragging && "0.5"};
+  cursor: pointer;
 
   h3 {
     font-size: 18px;
@@ -83,32 +85,60 @@ const Img = styled.img`
   border-radius: 0 ${props => props.theme.borderRadius} ${props => props.theme.borderRadius} 0;
 `
 
-const Recipe = ({ recipe }) => {
+const StyledPreview = styled(DragPreviewImage)`
+  height: 32px;
+  width: 32px;
+  opacity: 0.9;
+`
+
+const Recipe = ({ recipe, addRecipeToDate }) => {
   const history = useHistory()
-  const [{isDragging}, drag] = useDrag({
-    item: { type: ItemTypes.RECIPE },
-		collect: monitor => ({
-			isDragging: !!monitor.isDragging(),
-		}),
+  const [{ isDragging }, drag, preview] = useDrag({
+    item: { type: ItemTypes.RECIPE, recipe },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult()
+      if (item && dropResult) {
+        addRecipeToDate(item.recipe, dropResult.date, dropResult.meal)
+      }
+    },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
   })
+
+  // const [{ isDragging }, drag] = useDrag({
+  //   item: { name, type: ItemTypes.BOX },
+  //   end: (item, monitor) => {
+  //     const dropResult = monitor.getDropResult()
+  //     if (item && dropResult) {
+  //       alert(`You dropped ${item.name} into ${dropResult.name}!`)
+  //     }
+  //   },
+  //   collect: monitor => ({
+  //     isDragging: monitor.isDragging(),
+  //   }),
+  // })
 
   const goToRecipe = () => {
     history.push(`/recipe/${recipe.id}`)
   }
 
   return (
-    <RecipeCard onClick={goToRecipe} ref={drag} isDragging={isDragging}>
-      <Info>
-        <h3>{recipe.name}</h3>
-        <p>{recipe.description}</p>
-        <Tags>
-          {recipe.tags.map((tag, i) => (
-            <Tag key={i}>{tag}</Tag>
-          ))}
-        </Tags>
-      </Info>
-      <Img src={recipe.image} alt={recipe.name} />
-    </RecipeCard>
+    <>
+      <StyledPreview connect={preview} src={mealIcon} />
+      <RecipeCard onClick={goToRecipe} ref={drag} isDragging={isDragging}>
+        <Info>
+          <h3>{recipe.name}</h3>
+          <p>{recipe.description}</p>
+          <Tags>
+            {recipe.tags.map((tag, i) => (
+              <Tag key={i}>{tag}</Tag>
+            ))}
+          </Tags>
+        </Info>
+        <Img src={recipe.image} alt={recipe.name} />
+      </RecipeCard>
+    </>
   )
 }
 
