@@ -10,7 +10,7 @@ import recipeData from "../assets/recipes.js"
 import Recipe from "../components/Recipe"
 
 const Container = styled.div`
-  background: ${props => props.theme.primary["100"]};
+  background: ${props => props.theme.grey["100"]};
   min-height: 100vh;
   height: 100%;
   margin: 0;
@@ -34,7 +34,8 @@ const SearchBox = styled(Input)`
   box-shadow: ${props => props.theme.elevationInner};
   border: 3px solid ${props => props.theme.grey["400"]};
   margin: 0;
-  margin-right: 1rem;
+  margin-right: .5rem;
+  width: auto;
 
   &::placeholder {
     font-size: 14px;
@@ -94,7 +95,7 @@ const AllRecipes = () => {
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
-            <Button height='2.25rem' margin='0' onClick={createRecipe}>
+            <Button height='2.15rem' margin='0' onClick={createRecipe}>
               Create recipe
             </Button>
           </Row>

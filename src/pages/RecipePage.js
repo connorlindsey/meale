@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"
 import recipeData from "../assets/recipes"
 
 const Container = styled.div`
-  background: ${props => props.theme.primary["100"]};
+  background: ${props => props.theme.grey["100"]};
   min-height: 100vh;
   height: 100%;
   margin: 0;
@@ -13,12 +13,12 @@ const Container = styled.div`
 `
 
 const Main = styled.main`
-  width: 90%;
-  margin: 2rem auto;
-  display: grid;
-  grid-gap: 16px;
-  grid-template-columns: 1fr 350px;
+  width: 95%;
+  max-width: ${props => props.theme.maxWidth};
+  margin: 2rem auto 0;
+  height: 100%;
 `
+
 const RecipePage = () => {
   let { id } = useParams()
   const [recipe, setRecipe] = useState()

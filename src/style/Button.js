@@ -1,10 +1,10 @@
 import styled from "styled-components"
 
 export const Button = styled.button`
-  height: ${props => props.height || "40px"};
+  height: ${props => props.height || "36px"};
   padding: 0 14px;
   font-size: 16px;
-  margin:${props => props.margin || `0 .5rem`} !important;
+  margin: ${props => props.margin || `0 .5rem`} !important;
   letter-spacing: 0.25;
   text-decoration: none;
   outline: none;
@@ -13,20 +13,46 @@ export const Button = styled.button`
   background-color: ${props => props.theme.primary["500"]};
   border: 2px solid ${props => props.theme.primary["500"]};
   text-align: center;
-  color: #FFF;
+  color: #fff;
   cursor: pointer;
 
   transition: all 0.1s ease-out;
 
   &:hover {
-    transform: translateY(-.5px);
+    transform: translateY(-0.5px);
     color: #fff;
   }
 
   &:active {
-    transform: translateY(.5px);
+    transform: translateY(0.5px);
     background-color: ${props => props.theme.primary["600"]};
     border-color: ${props => props.theme.primary["600"]};
     color: #fff;
+  }
+`
+
+export const SecondaryButton = styled(Button)`
+  background-color: ${props => props.theme.grey["500"]};
+  border: 2px solid ${props => props.theme.grey["500"]};
+  color: ${props => props.theme.grey["900"]};
+
+  &:hover {
+    color: ${props => props.theme.grey["900"]};
+  }
+
+  &:active {
+    transform: translateY(0.5px);
+    background-color: ${props => props.theme.grey["600"]};
+    border-color: ${props => props.theme.grey["600"]};
+  }
+`
+
+export const OutlineButton = styled(Button)`
+  background: transparent;
+  color: ${props => props.theme.primary["500"]};
+
+  &:hover {
+    color: #fff;
+    background-color: ${props => props.theme.primary["500"]};
   }
 `

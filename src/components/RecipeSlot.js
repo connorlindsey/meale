@@ -72,7 +72,7 @@ const RecipeSlot = ({ recipe, date, clearRecipe, meal }) => {
   return (
     <StyledSlot ref={drop} canDrop={canDrop && isOver}>
       {rec && (
-        <Type as="h4" fontSize="12px" color="800">{rec.name}</Type>
+        <Type as="h4" fontSize="12px" color="700">{rec.name}</Type>
       )}
       {rec ? <HiddenMinus onClick={removeRecipe} /> : <HiddenPlus />}
     </StyledSlot>
