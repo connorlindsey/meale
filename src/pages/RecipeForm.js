@@ -41,7 +41,7 @@ const Divider = styled.hr`
   background-color: ${props => props.theme.grey["400"]};
   border-radius: ${props => props.theme.borderRadius};
   border: none;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   margin-bottom: 1rem;
 `
 
@@ -59,6 +59,10 @@ const ImageLabel = styled.label`
   align-items: center;
   padding: 3rem 0;
   margin: 0 0 1rem;
+  cursor: pointer;
+
+  &:hover {
+  }
 `
 
 const FileInput = styled.input`
@@ -111,7 +115,7 @@ const RecipeForm = () => {
               <Input type='text' placeholder='Recipe name' />
               <Textarea placeholder='Recipe description…' />
               <div>
-                <OutlineButton margin=".5rem 0">+ Tag</OutlineButton>
+                <OutlineButton margin='.5rem 0'>+ Tag</OutlineButton>
               </div>
             </Col>
           </Row>
@@ -126,7 +130,7 @@ const RecipeForm = () => {
                 Write your recipe instructions, including the ingredients required for each step.
               </Type>
             </div>
-            <Row jc="end">
+            <Row jc='end'>
               <Type>1</Type>
               {/* Ingredients */}
               <Col>
@@ -134,20 +138,24 @@ const RecipeForm = () => {
                   <Input placeholder='Ingredient' />
                   <Input placeholder='Qty' type='number' />
                 </Row>
-                <OutlineButton margin=".5rem 0">+ Ingredient</OutlineButton>
+                <OutlineButton margin='.5rem 0'>+ Ingredient</OutlineButton>
               </Col>
               {/* Step Instructions */}
               <Col>
                 <Textarea placeholder='Step instructions' />
-                <OutlineButton margin=".5rem 0">Add step</OutlineButton>
+                <OutlineButton margin='.5rem 0'>Add step</OutlineButton>
               </Col>
             </Row>
           </Row>
           <Divider />
           {/* Actions */}
-          <Row jc="end">
-            <SecondaryButton margin="0rem 0 0 .5rem" type='submit'>Cancel</SecondaryButton>
-            <Button margin="0rem 0 0 .5rem" type='submit'>Save</Button>
+          <Row jc='end'>
+            <SecondaryButton margin='0rem 0 0 .5rem' type='submit'>
+              Cancel
+            </SecondaryButton>
+            <Button margin='0rem 0 0 .5rem' type='submit'>
+              Save
+            </Button>
           </Row>
         </Form>
       </Main>

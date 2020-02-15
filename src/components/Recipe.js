@@ -106,19 +106,6 @@ const Recipe = ({ recipe, addRecipeToDate }) => {
     }),
   })
 
-  // const [{ isDragging }, drag] = useDrag({
-  //   item: { name, type: ItemTypes.BOX },
-  //   end: (item, monitor) => {
-  //     const dropResult = monitor.getDropResult()
-  //     if (item && dropResult) {
-  //       alert(`You dropped ${item.name} into ${dropResult.name}!`)
-  //     }
-  //   },
-  //   collect: monitor => ({
-  //     isDragging: monitor.isDragging(),
-  //   }),
-  // })
-
   const goToRecipe = () => {
     history.push(`/recipe/${recipe.id}`)
   }

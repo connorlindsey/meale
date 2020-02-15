@@ -42,9 +42,7 @@ const Main = styled.main`
 const CalendarContainer = styled.div`
   grid-column: 0 / 1;
   width: 100%;
-  max-width: 95vw;
   margin: 0 auto;
-  overflow: auto;
 `
 
 const CalendarBar = styled.div`
