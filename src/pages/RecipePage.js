@@ -3,6 +3,8 @@ import styled from "styled-components"
 import Nav from "../components/Nav"
 import { useParams } from "react-router-dom"
 import recipeData from "../assets/recipes"
+import { Button, SecondaryButton, OutlineButton } from "../style/Button"
+
 
 const Container = styled.div`
   background: ${props => props.theme.grey["100"]};
@@ -177,6 +179,7 @@ const RecipePage = () => {
             <Img src={recipe.image} alt={recipe.name} />
           </RecipeCard>
         )}
+        <Button margin='0rem 0 0 0rem'>Edit Recipe</Button>
       </Main>
     </Container>
   )
