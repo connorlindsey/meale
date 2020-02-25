@@ -273,7 +273,7 @@ const Dashboard = () => {
     )
   })
 
-  const getYear = () => dateObject.format("YY")
+  const getYear = () => dateObject.format("YYYY")
   const getMonth = () => dateObject.format("MMMM")
   const incMonth = () => {
     let obj = moment(dateObject).set("month", dateObject.month() + 1)
@@ -409,7 +409,7 @@ const Dashboard = () => {
       <Main>
         {/* Calendar */}
         <CalendarContainer>
-          <Card width='100%' max-width='100%' elevation='elevation1'>
+          <Card width='100%'  bg='0' max-width='100%' elevation='elevation1'>
             {/* Title and date selection */}
             {isNotificationShowing && (
               <Notification>
