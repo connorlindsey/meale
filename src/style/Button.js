@@ -32,12 +32,13 @@ export const Button = styled.button`
 `
 
 export const SecondaryButton = styled(Button)`
-  background-color: ${props => props.theme.grey["500"]};
-  border: 2px solid ${props => props.theme.grey["500"]};
-  color: ${props => props.theme.grey["900"]};
+  background-color: ${props => props.theme.grey["400"]};
+  border: 2px solid ${props => props.theme.grey["400"]};
+  color: ${props => props.theme.grey["800"]};
 
   &:hover {
-    color: ${props => props.theme.grey["900"]};
+    background-color: ${props => props.theme.grey["500"]};
+    border: 2px solid ${props => props.theme.grey["500"]};
   }
 
   &:active {

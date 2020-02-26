@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import Nav from "../components/Nav"
-import { useParams } from "react-router-dom"
+import { useParams, NavLink as Link } from "react-router-dom"
 import recipeData from "../assets/recipes"
-import { Button, SecondaryButton, OutlineButton } from "../style/Button"
-
+import { SecondaryButton } from "../style/Button"
 
 const Container = styled.div`
   background: ${props => props.theme.grey["100"]};
@@ -97,7 +96,7 @@ const Step = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 
   ul {
     font-size: 18px;
@@ -109,7 +108,7 @@ const Step = styled.div`
 
     span.quantity {
       font-weight: 600;
-      margin-right: .5rem;
+      margin-right: 0.5rem;
       color: ${props => props.theme.grey["600"]};
     }
 
@@ -158,11 +157,7 @@ const RecipePage = () => {
                 {recipe.steps.map(step => (
                   <Step>
                     <ul>
-                      {step.ingredients.length === 0 && (
-                        <li className="none">
-                          No ingredients
-                        </li>
-                      )}
+                      {step.ingredients.length === 0 && <li className='none'>No ingredients</li>}
                       {step.ingredients.map(i => (
                         <li>
                           <span className='quantity'>{i.qty}</span>
@@ -179,7 +174,7 @@ const RecipePage = () => {
             <Img src={recipe.image} alt={recipe.name} />
           </RecipeCard>
         )}
-        <Button margin='0rem 0 0 0rem'>Edit Recipe</Button>
+        <SecondaryButton as={Link} to="/edit-recipe" margin='0'>Edit Recipe</SecondaryButton>
       </Main>
     </Container>
   )

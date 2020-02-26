@@ -33,6 +33,7 @@ const Main = styled.main`
   grid-gap: 16px;
   grid-template-columns: 1fr 350px;
   height: 100%;
+  overflow-x: auto;
 
   @media screen and (max-width: 800px) {
     grid-template-columns: 1fr;
@@ -193,14 +194,14 @@ const Calendar = styled.table`
   }
 
   td {
-    padding: 0.25rem 0.5rem;
+    padding: 0.15rem 0.5rem;
     .date {
-      font-size: 12px;
+      font-size: 11px;
       color: ${props => props.theme.grey["700"]};
     }
 
     .today {
-      color: ${props => props.theme.primary["500"]};
+      color: ${props => props.theme.primary["600"]};
       font-weight: 700;
     }
   }
@@ -222,7 +223,7 @@ const Notification = styled.div`
   position: relative;
   background-color: ${props => props.theme.primary["300"]};
   width: 100%;
-  padding: .1rem .5rem;
+  padding: 0.1rem 0.5rem;
   border-radius: ${props => props.theme.borderRadius};
 `
 
@@ -262,7 +263,7 @@ const Dashboard = () => {
   /*=============
   Calendar
   =============*/
-  const [displayRecipes, setDisplayRecipes] = useState(calendarRecipes);
+  const [displayRecipes, setDisplayRecipes] = useState(calendarRecipes)
   const [dateObject, setDateObject] = useState(new moment())
   let weekdayshort = moment.weekdaysShort()
   let weekdayshortname = weekdayshort.map(day => {
@@ -317,18 +318,18 @@ const Dashboard = () => {
     return displayRecipes[month][day][meal]
   }
 
-  const [num, setNum] = useState(0);
+  const [num, setNum] = useState(0)
   const addRecipeToDate = (recipe, day, meal) => {
     const month = getMonth()
     if (typeof calendarRecipes[month] === "undefined") {
-      calendarRecipes[month] = {};
-    } 
+      calendarRecipes[month] = {}
+    }
     if (typeof calendarRecipes[month][day] === "undefined") {
       calendarRecipes[month][day] = {}
     }
-    calendarRecipes[month][day][meal] = recipe;
-    setDisplayRecipes(displayRecipes);
-    setNum(num + 1);
+    calendarRecipes[month][day][meal] = recipe
+    setDisplayRecipes(displayRecipes)
+    setNum(num + 1)
   }
 
   const clearRecipe = (day, meal) => {
@@ -349,9 +350,27 @@ const Dashboard = () => {
     daysInMonth.push(
       <td key={d}>
         <span className={`date ${currentDay}`}>{d}</span>
-        <RecipeSlot date={d} meal={"b"} recipe={getRecipeByDay(d, "b")} clearRecipe={clearRecipe} />
-        <RecipeSlot date={d} meal={"l"} recipe={getRecipeByDay(d, "l")} clearRecipe={clearRecipe} />
-        <RecipeSlot date={d} meal={"d"} recipe={getRecipeByDay(d, "d")} clearRecipe={clearRecipe} />
+        <RecipeSlot
+          date={d}
+          meal={"b"}
+          recipe={getRecipeByDay(d, "b")}
+          clearRecipe={clearRecipe}
+          addRecipe={addRecipeToDate}
+        />
+        <RecipeSlot
+          date={d}
+          meal={"l"}
+          recipe={getRecipeByDay(d, "l")}
+          clearRecipe={clearRecipe}
+          addRecipe={addRecipeToDate}
+        />
+        <RecipeSlot
+          date={d}
+          meal={"d"}
+          recipe={getRecipeByDay(d, "d")}
+          clearRecipe={clearRecipe}
+          addRecipe={addRecipeToDate}
+        />
       </td>
     )
   }
@@ -389,16 +408,14 @@ const Dashboard = () => {
     let tmp = [
       { qty: "4", name: "Tilapia" },
       { qty: "1", name: "Cilantro" },
-      { qty: "12", name: "Tortillas" },
-      { qty: "4", name: "Tilapia" },
-      { qty: "1", name: "Cilantro" },
-      { qty: "12", name: "Tortillas" },
-      { qty: "4", name: "Tilapia" },
-      { qty: "1", name: "Cilantro" },
-      { qty: "12", name: "Tortillas" },
-      { qty: "4", name: "Tilapia" },
-      { qty: "1", name: "Cilantro" },
-      { qty: "12", name: "Tortillas" },
+      { qty: "12", name: "Eggs" },
+      { qty: "1", name: "Flour" },
+      { qty: "2", name: "Bell Peppers" },
+      { qty: "1", name: "Olive Oil" },
+      { qty: "1", name: "Milk" },
+      { qty: "1", name: "Oatmeal" },
+      { qty: "1", name: "Rye Flour" },
+      { qty: "3", name: "Fresh greens" },
     ]
     setShoppingList(tmp)
   }
@@ -409,7 +426,7 @@ const Dashboard = () => {
       <Main>
         {/* Calendar */}
         <CalendarContainer>
-          <Card width='100%'  bg='0' max-width='100%' elevation='elevation1'>
+          <Card width='100%' bg='0' max-width='100%' elevation='elevation1'>
             {/* Title and date selection */}
             {isNotificationShowing && (
               <Notification>
@@ -462,7 +479,9 @@ const Dashboard = () => {
             {/* Display recipes */}
             <ScrollContainer>
               {recipes.length > 0 &&
-                filteredRecipes.map(recipe => <Recipe recipe={recipe} key={recipe.id} addRecipeToDate={addRecipeToDate} />)}
+                filteredRecipes.map(recipe => (
+                  <Recipe recipe={recipe} key={recipe.id} addRecipeToDate={addRecipeToDate} />
+                ))}
             </ScrollContainer>
           </Card>
 

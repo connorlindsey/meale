@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import { Type } from "../style/Typography"
-import styled from "styled-components";
+import React, { useState, useEffect } from "react"
+import styled from "styled-components"
 import { FiPlus, FiMinus } from "react-icons/fi"
-import { ItemTypes } from '../utils/DragItems'
-import { useDrop } from 'react-dnd'
+import { ItemTypes } from "../utils/DragItems"
+import { useDrop } from "react-dnd"
 
 const StyledSlot = styled.div`
-  min-width: 100px;
-  border: 2px solid ${props => props.theme.grey["300"]};
+  width: 100px;
+  border: 2px solid
+    ${props => (props.isLoading ? props.theme.grey["400"] : props.theme.grey["300"])};
   border-radius: ${props => props.theme.borderRadius};
-  height: 2rem;
-  background: ${props => props.canDrop ? props.theme.primary["400"] : props.theme.grey["200"]};
+  height: 1.8rem;
+  background: ${props => (props.canDrop ? props.theme.primary["400"] : props.theme.grey["200"])};
+  background: ${props => props.isLoading && props.theme.grey["400"]};
   outline: none;
-  margin: 0.5rem auto;
+  margin: 0.4rem auto;
   padding-left: 4px;
   position: relative;
   cursor: pointer;
@@ -26,7 +27,7 @@ const HiddenPlus = styled(FiPlus)`
   height: 16px;
   width: 16px;
   right: 8px;
-  top: 6px;
+  top: 4px;
   color: ${props => props.theme.grey["200"]};
   ${StyledSlot}:hover & {
     cursor: pointer;
@@ -48,33 +49,77 @@ const HiddenMinus = styled(FiMinus)`
   }
 `
 
-const RecipeSlot = ({ recipe, date, clearRecipe, meal }) => {
+const Input = styled.input`
+  width: 80%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 12px;
+  color: ${props => props.theme.grey["700"]};
+  font-weight: 700;
+`
+
+const RecipeSlot = ({ recipe, date, clearRecipe, meal, addRecipe }) => {
   // Recipe State
-  const [rec, setRec] = useState();
+  const [rec, setRec] = useState()
+  const [val, setVal] = useState("")
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
-    setRec(recipe);
+    setRec(recipe)
+    if (recipe) {
+      setVal(recipe.name)
+    }
   }, [setRec, recipe])
+
   const removeRecipe = () => {
-    clearRecipe(date);
+    setLoading(true)
+    clearRecipe(date)
     setRec(null)
+    setVal("")
+    setTimeout(() => {
+      setLoading(false)
+    }, 300)
   }
 
   // Drag and drop
   const [{ canDrop, isOver }, drop] = useDrop({
-		accept: ItemTypes.RECIPE,
+    accept: ItemTypes.RECIPE,
     drop: () => ({ date, meal }),
-		collect: monitor => ({
+    collect: monitor => ({
       isOver: !!monitor.isOver(),
-      canDrop: monitor.canDrop()
-		}),
+      canDrop: monitor.canDrop(),
+    }),
   })
-  
+
+  const handleInput = event => {
+    setVal(event.target.value)
+  }
+
+  const handleAddRecipe = () => {
+    if (val.length <= 0) return
+    setLoading(true)
+    let recipe = { name: val }
+    setRec(recipe)
+    addRecipe(recipe, date, meal)
+    setTimeout(() => {
+      setLoading(false)
+    }, 300)
+  }
+
   return (
-    <StyledSlot ref={drop} canDrop={canDrop && isOver}>
-      {rec && (
-        <Type as="h4" fontSize="12px" color="700">{rec.name}</Type>
-      )}
-      {rec ? <HiddenMinus onClick={removeRecipe} /> : <HiddenPlus />}
+    <StyledSlot ref={drop} canDrop={canDrop && isOver} isLoading={loading}>
+      <form
+        onSubmit={e => {
+          e.preventDefault()
+          handleAddRecipe()
+        }}>
+        <Input value={val} onChange={handleInput} readOnly={rec} disabled={loading} />
+      </form>
+      {(rec || val) && <HiddenMinus onClick={removeRecipe} />}
+      {!rec && <HiddenPlus onClick={handleAddRecipe} />}
     </StyledSlot>
   )
 }
