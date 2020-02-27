@@ -65,20 +65,20 @@ const Tags = styled.div`
 `
 
 const Tag = styled.span`
-  height: 32px;
-  padding: 0 14px;
-  font-size: 16px;
-  line-height: 32px;
+  height: 24px;
+  padding: 0 8px;
+  font-size: 14px;
+  line-height: 24px;
   margin: 0;
   margin-right: 0.5rem;
   letter-spacing: 0.25;
   text-decoration: none;
   outline: none;
   text-decoration: none;
-  border-radius: ${props => props.theme.borderRadius};
-  background-color: ${props => props.theme.grey["600"]};
+  border-radius: 50px;
+  background-color: ${props => props.theme.grey["300"]};
   text-align: center;
-  color: #fff;
+  color: ${props => props.theme.grey["700"]};
 `
 
 const Img = styled.img`

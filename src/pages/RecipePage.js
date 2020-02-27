@@ -65,23 +65,24 @@ const Tags = styled.div`
   align-items: center;
   justify-content: start;
   max-width: 400px;
+  margin-bottom: 2rem;
 `
 
 const Tag = styled.span`
-  height: 30px;
-  padding: 0 14px;
-  font-size: 16px;
-  line-height: 32px;
+  height: 24px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 24px;
   margin: 0;
   margin-right: 0.5rem;
   letter-spacing: 0.25;
   text-decoration: none;
   outline: none;
   text-decoration: none;
-  border-radius: ${props => props.theme.borderRadius};
-  background-color: ${props => props.theme.grey["600"]};
+  border-radius: 50px;
+  background-color: ${props => props.theme.grey["300"]};
   text-align: center;
-  color: #fff;
+  color: ${props => props.theme.grey["700"]};
 `
 
 const Img = styled.img`
@@ -97,6 +98,12 @@ const Step = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
+
+  .title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: ${props => props.theme.grey["600"]};
+  }
 
   ul {
     font-size: 18px;
@@ -154,6 +161,10 @@ const RecipePage = () => {
                 ))}
               </Tags>
               <Steps>
+                <Step>
+                  <ul className="title">Ingredients</ul>
+                  <p className="title">Instructions</p>
+                </Step>
                 {recipe.steps.map(step => (
                   <Step>
                     <ul>

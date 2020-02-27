@@ -56,6 +56,9 @@ const Nav = () => {
         <StyledLink activeClassName='is-active' to='/recipes'>
           Recipes
         </StyledLink>
+        <StyledLink activeClassName='is-active' to='/shopping-list'>
+          Shopping List
+        </StyledLink>
         <StyledLink to='/'>Logout</StyledLink>
       </nav>
     </Header>
