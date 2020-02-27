@@ -1,10 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import Nav from "../components/Nav"
 import { Form, Input, Textarea } from "../style/Form"
 import { Type } from "../style/Typography"
 import { Button, SecondaryButton, OutlineButton } from "../style/Button"
-import { FiImage } from "react-icons/fi"
+import { FiImage, FiX } from "react-icons/fi"
 
 const Container = styled.div`
   background: ${props => props.theme.grey["100"]};
@@ -82,7 +82,31 @@ const StyledImageIcon = styled(FiImage)`
   color: ${props => props.theme.grey["600"]};
 `
 
+// Notification
+const Close = styled(FiX)`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: ${props => props.theme.primary["700"]};
+  border-radius: 20px;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+`
+
+const Notification = styled.div`
+  position: relative;
+  background-color: ${props => props.theme.primary["300"]};
+  width: 100%;
+  padding: 0.1rem 0.5rem;
+  border-radius: ${props => props.theme.borderRadius};
+  div{
+    display: flex;
+  }
+`
+
 const RecipeForm = () => {
+  const [isNotificationShowing, setNotification] = useState(true)
   const handleSubmit = e => {
     e.preventDefault()
   }
@@ -91,6 +115,14 @@ const RecipeForm = () => {
       <Nav />
       <Main>
         <Form onSubmit={e => handleSubmit(e)}>
+        {isNotificationShowing && (
+              <Notification>
+                <div>
+                  <h3>Coming Soon! This page is under development</h3>
+                </div>
+                <Close onClick={() => setNotification(false)} />
+              </Notification>
+            )}
           {/* Title */}
           <Type as='h1' fontSize='24px' weight='500' color='900'>
             New Recipe
