@@ -32,9 +32,8 @@ const Main = styled.main`
 
 const CalendarContainer = styled.div`
   width: 100%;
-  margin: 0rem auto;
+  margin: 1rem auto;
   display: grid;
-  grid-gap: 16px;
   grid-template-columns: 1fr 350px;
 
   @media screen and (max-width: 800px) {
@@ -74,6 +73,7 @@ const Sidebar = styled.div`
   width: 350px;
   max-width: 350px;
   padding: 1rem;
+  background: ${props => props.theme.grey["50"]};
 `
 
 const Row = styled.div`
@@ -85,8 +85,7 @@ const Row = styled.div`
 const SearchBox = styled(Input)`
   box-shadow: ${props => props.theme.elevationInner};
   border: 3px solid ${props => props.theme.grey["400"]};
-  margin: 0;
-  width: auto;
+  width: 350px;
 
   &::placeholder {
     font-size: 14px;
@@ -164,7 +163,7 @@ const Notification = styled.div`
   background-color: ${props => props.theme.primary["300"]};
   width: 100%;
   padding: 0.1rem 0.5rem;
-  margin: 0 0 .5rem;
+  margin: 1rem auto;
   border-radius: ${props => props.theme.borderRadius};
 `
 
@@ -343,18 +342,26 @@ const Dashboard = () => {
       <Nav />
       <Main>
         {/* Calendar */}
-        <Card width='100%' bg='0' max-width='100%' elevation='elevation1' margin='1rem auto'>
-          {isNotificationShowing && (
-            <Notification>
-              <p>Drag and drop recipes onto meal slots to add to your calendar</p>
-              <Close onClick={() => setNotification(false)} />
-            </Notification>
-          )}
+        {isNotificationShowing && (
+          <Notification>
+            <p>Drag and drop recipes onto meal slots to add to your calendar</p>
+            <Close onClick={() => setNotification(false)} />
+          </Notification>
+        )}
+        <Card
+          width='100%'
+          bg='0'
+          max-width='100%'
+          elevation='elevation1'
+          margin='1rem auto'
+          padding='0'>
           <CalendarContainer>
-            <div>
+            <div style={{ padding: "1rem" }}>
               {/* Title and date selection */}
               <CalendarBar>
-                <Type fontSize='18px'>Meal calendar</Type>
+                <Type fontSize='24px' weight='500'>
+                  Meal calendar
+                </Type>
                 <MonthSelector>
                   <FiChevronLeft onClick={decMonth} />
                   <Type color='700'>{getMonth() + " " + getYear()}</Type>
@@ -373,7 +380,7 @@ const Dashboard = () => {
             {/* Sidebar */}
             <Sidebar>
               {/* Recipes */}
-              <Type as='h2' fontSize='18px' color='900' weight='500' margin='0 0 .5rem'>
+              <Type as='h2' fontSize='24px' color='900' weight='500'>
                 Search recipes
               </Type>
               <Row>
@@ -383,7 +390,7 @@ const Dashboard = () => {
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                 />
-                <Button height='2.25rem' margin='0' onClick={createRecipe}>
+                <Button height='2.25rem' margin='0 0 0 1rem' padding="0 4px" onClick={createRecipe} width="80%">
                   Create recipe
                 </Button>
               </Row>

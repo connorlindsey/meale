@@ -35,9 +35,14 @@ const StyledDatePicker = styled(DatePicker)`
   outline: none;
   padding-left: 10px;
   box-shadow: ${props => props.theme.elevation1};
-  font-size: 14px;
-  color: ${props => props.theme.grey["500"]};
   text-transform: uppercase;
+  font-size: 14px;
+  color: ${props => props.theme.grey["800"]};
+
+  & > *::placeholder {
+    font-size: 14px;
+    color: ${props => props.theme.grey["500"]};
+  }
 `
 
 const ListItem = styled.div`
@@ -95,14 +100,7 @@ const Main = styled.main`
   width: 95%;
   max-width: ${props => props.theme.maxWidth};
   margin: 2rem auto 0;
-  display: grid;
-  grid-gap: 16px;
-  grid-template-columns: 1fr 350px;
   height: 100%;
-
-  @media screen and (max-width: 800px) {
-    grid-template-columns: 1fr;
-  }
 `
 
 const ShoppingList = () => {
@@ -133,18 +131,24 @@ const ShoppingList = () => {
     <Container>
       <Nav />
       <Main>
-        <Card width='350px' maxWidth='350px' elevation='elevation1' bg='0' padding='1rem 1rem 0'>
+        <Card
+          width='400px'
+          maxWidth='4000px'
+          elevation='elevation1'
+          bg='0'
+          padding='1rem 1rem 0'
+          margin='1rem auto'>
           <Type as='h2' fontSize='18px' color='900' weight='500' margin='0 0 .5rem'>
             Generate your shopping list
           </Type>
           <Row>
-            <Label>
+            <Label onClick={e => e.preventDefault()}>
               Start date
-              <StyledDatePicker selected={startDate} onChange={date => setStartDate(date)} />
+              <StyledDatePicker selected={startDate} onDayClick={date => setStartDate(date)} onChange={date => setStartDate(date)} />
             </Label>
-            <Label>
+            <Label onClick={e => e.preventDefault()}>
               End date
-              <StyledDatePicker selected={endDate} onChange={date => setEndDate(date)} />
+              <StyledDatePicker selected={endDate} onDayClick={date => setStartDate(date)} onChange={date => setEndDate(date)} />
             </Label>
             <Button margin='1.4rem 0 0 0' height='2.25rem' onClick={generateShoppingList}>
               <FiShoppingCart />

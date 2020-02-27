@@ -7,7 +7,7 @@ import mealIcon from "../assets/meal.png"
 
 const RecipeCard = styled.div`
   box-shadow: ${props => props.theme.elevation1};
-  background-color: ${props => props.theme.grey["100"]};
+  background-color: ${props => props.theme.grey["0"]};
   border-radius: ${props => props.theme.borderRadius};
   display: flex;
   flex-direction: row;

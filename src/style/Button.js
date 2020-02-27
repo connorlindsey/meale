@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 export const Button = styled.button`
   height: ${props => props.height || "36px"};
+  width: ${props => props.width || "auto"};
   padding: 0 14px;
   font-size: 16px;
   margin: ${props => props.margin || `0 .5rem`} !important;
