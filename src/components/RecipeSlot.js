@@ -4,10 +4,12 @@ import { FiMinus } from "react-icons/fi"
 import { ItemTypes } from "../utils/DragItems"
 import { useDrop } from "react-dnd"
 
+// TODO: Darken border
+
 const StyledSlot = styled.div`
   width: 100px;
   border: 2px solid
-    ${props => (props.isLoading ? props.theme.grey["400"] : props.theme.grey["100"])};
+    ${props => (props.isLoading ? props.theme.grey["400"] : props.theme.grey["200"])};
   border-radius: ${props => props.theme.borderRadius};
   height: 1.8rem;
   background: ${props => (props.canDrop ? props.theme.primary["400"] : props.theme.grey["50"])};
@@ -33,7 +35,7 @@ const HiddenMinus = styled(FiMinus)`
   width: 16px;
   right: 8px;
   top: 6px;
-  color: ${props => props.theme.grey["200"]};
+  color: ${props => props.theme.grey["100"]};
   ${StyledSlot}:hover & {
     cursor: pointer;
     color: ${props => props.theme.grey["500"]};

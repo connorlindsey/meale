@@ -164,6 +164,7 @@ const Notification = styled.div`
   background-color: ${props => props.theme.primary["300"]};
   width: 100%;
   padding: 0.1rem 0.5rem;
+  margin: 0 0 .5rem;
   border-radius: ${props => props.theme.borderRadius};
 `
 
