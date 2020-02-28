@@ -98,11 +98,9 @@ const Notification = styled.div`
   position: relative;
   background-color: ${props => props.theme.primary["300"]};
   width: 100%;
-  padding: 0.1rem 0.5rem;
+  padding: 1rem 0.5rem;
+  margin: 1rem auto;
   border-radius: ${props => props.theme.borderRadius};
-  div{
-    display: flex;
-  }
 `
 
 const RecipeForm = () => {
@@ -115,14 +113,12 @@ const RecipeForm = () => {
       <Nav />
       <Main>
         <Form onSubmit={e => handleSubmit(e)}>
-        {isNotificationShowing && (
-              <Notification>
-                <div>
-                  <h3>Coming Soon! This page is under development</h3>
-                </div>
-                <Close onClick={() => setNotification(false)} />
-              </Notification>
-            )}
+          {isNotificationShowing && (
+            <Notification>
+              <div>Coming Soon! This page is under development</div>
+              <Close onClick={() => setNotification(false)} />
+            </Notification>
+          )}
           {/* Title */}
           <Type as='h1' fontSize='24px' weight='500' color='900'>
             New Recipe
